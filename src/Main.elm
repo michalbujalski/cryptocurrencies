@@ -14,38 +14,31 @@ init : ( Model, Cmd Msg )
 init =
     ( defaultModel, fetchCurrency currencyUrl)
 
-
-
--- update : Msg -> Model -> ( Model, Cmd Msg )
--- update msg model =
---     ( model, Cmd.none )
-
-
-
 ---- VIEW ----
 
 
 view : Model -> Html Msg
 view model =
-    div []
-        [ img [ src "/logo.svg" ] []
-        , h1 [] [ text "Your Elm App is working!" ]
-        , currencyView model
-        ]
+    currencyFetchView model
 
-currencyView : Model -> Html Msg
-currencyView model =
+currencyFetchView : Model -> Html Msg
+currencyFetchView model =
   case model.currency of
       Loading ->
-          div [] [ text "loading" ]
+          div [] [ text "Loading..." ]
       NotAsked ->
           div [] []
       Failure failure ->
           div [] [ text <| toString failure ]
       Success payload ->
-          div [] [ text payload.base ]
-          
+          currencyView payload
 
+currencyView : Currency -> Html Msg
+currencyView currency =
+  div []
+    [ div [] [ text <| currency.base ++ " - " ++ currency.target ]
+    , div [] [ text <| "$ " ++ currency.price ]
+    ]
 
 ---- PROGRAM ----
 
