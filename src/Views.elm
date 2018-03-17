@@ -1,7 +1,7 @@
 module Views exposing (..)
 
-import Html exposing (Html, text, div, h1, img)
-import Html.Attributes exposing (src)
+import Html exposing (Html, text, div, button, h1, img, button)
+import Html.Attributes exposing (src, class)
 import Models exposing (Model, Currency)
 import Msgs exposing (Msg)
 import RemoteData exposing (..)
@@ -27,4 +27,5 @@ currencyView currency =
   div []
     [ div [] [ text <| currency.base ++ " - " ++ currency.target ]
     , div [] [ text <| "$ " ++ currency.price ]
+    , button [ class "button is-primary" ] [ text "test" ]
     ]

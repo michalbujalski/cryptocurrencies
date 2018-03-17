@@ -3,6 +3,8 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
+    "build-css": "node-sass-chokidar src/ -o src/",
+    "watch-css": "npm run build-css && node-sass-chokidar src/ -o src/ --watch --recursive",
     "build": "node scripts/build.js",
     "start": "node scripts/start.js",
     "package": "elm-package",
@@ -45,6 +47,7 @@
     "webpack-dev-server": "^2.11.1"
   },
   "dependencies": {
-    "bulma": "^0.6.2"
+    "bulma": "^0.6.2",
+    "node-sass-chokidar": "^1.1.2"
   }
 }
