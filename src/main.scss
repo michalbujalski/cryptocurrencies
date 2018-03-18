@@ -3,7 +3,6 @@
 body {
   font-family: 'Source Sans Pro', 'Trebuchet MS', 'Lucida Grande', 'Bitstream Vera Sans', 'Helvetica Neue', sans-serif;
   margin: 0;
-  text-align: center;
   color: #293c4b;
 }
 
@@ -15,7 +14,16 @@ img {
   margin: 20px 0;
   max-width: 200px;
 }
+.currency{
+  &-select{
+    &__container{
 
+    }
+    &__item{
+      text-align: left;
+    }
+  }
+}
 .market__tabs{
   width: 100%;
   display: flex;

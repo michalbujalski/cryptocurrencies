@@ -6,6 +6,8 @@ import Html.Events exposing (onClick)
 import Models exposing (Model, Ticker, Market, CurrencySymbol)
 import Msgs exposing (Msg)
 import RemoteData exposing (..)
+import CurrenciesSelect.Views exposing (..)
+import CurrenciesSelect.Models exposing (..)
 
 view : Model -> Html Msg
 view model =
@@ -23,14 +25,15 @@ currencyFetchView model =
       Success payload ->
         case model.selectedMarket of
             Just selectedMarket ->
-              currencyView payload selectedMarket model.currencySymbol
+              currencyView payload selectedMarket model.currencySymbol model.cryptoCurrenciesSelect
             Nothing ->
               div [] []
 
-currencyView : Ticker -> Market -> CurrencySymbol -> Html Msg
-currencyView ticker selectedMarket currencySymbol =
+currencyView : Ticker -> Market -> CurrencySymbol -> CurrenciesSelectModel -> Html Msg
+currencyView ticker selectedMarket currencySymbol cryptoCurrenciesSelect =
   div []
-    [ div [] [ text <| ticker.base ++ " - " ++ ticker.target ]
+    [ currenciesSelectView cryptoCurrenciesSelect
+    , div [] [ text <| ticker.base ++ " - " ++ ticker.target ]
     , div [] [ text <| formattedCurrencyView currencySymbol ticker.price ]
     , div [] [ text <| ticker.change ]
     , div [] [ text <| ticker.volume ]

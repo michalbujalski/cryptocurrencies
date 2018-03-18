@@ -4,13 +4,13 @@ import Html exposing (program)
 import Models exposing (..)
 import Updates exposing (update)
 import Msgs exposing (Msg)
-import Commands exposing (..)
 import Views exposing (view)
+import Commands exposing (fetchCurrency, currencyUrl)
 
 
 init : ( Model, Cmd Msg )
 init =
-    ( defaultModel, fetchCurrency currencyUrl)
+    ( defaultModel, fetchCurrency <| currencyUrl "btc" )
 
 main : Program Never Model Msg
 main =
