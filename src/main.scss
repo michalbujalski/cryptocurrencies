@@ -15,3 +15,11 @@ img {
   margin: 20px 0;
   max-width: 200px;
 }
+
+.market__tabs{
+  width: 100vw;
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  overflow: hidden;
+}

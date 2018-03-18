@@ -17,11 +17,15 @@ type alias Currency = {
   markets: List Market
 }
 
+type alias SelectedMarket = Maybe Market
+
 type alias Model = {
-  currency: WebData Currency
+  currency: WebData Currency,
+  selectedMarket: SelectedMarket
 }
 
 defaultModel : Model
 defaultModel = 
   { currency = RemoteData.Loading
+  , selectedMarket = Nothing
   }
