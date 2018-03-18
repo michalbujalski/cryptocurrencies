@@ -8,7 +8,7 @@ type alias Market = {
   volume: Float
 }
 
-type alias Currency = {
+type alias Ticker = {
   base: String,
   target: String,
   price: String,
@@ -20,7 +20,7 @@ type alias Currency = {
 type alias SelectedMarket = Maybe Market
 
 type alias Model =
-  { currency: WebData Currency
+  { ticker: WebData Ticker
   , selectedMarket: SelectedMarket
   , currencySymbol: CurrencySymbol
 }
@@ -29,7 +29,7 @@ type alias CurrencySymbol = String
 
 defaultModel : Model
 defaultModel = 
-  { currency = RemoteData.Loading
+  { ticker = RemoteData.Loading
   , selectedMarket = Nothing
   , currencySymbol = "$"
   }

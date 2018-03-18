@@ -3,7 +3,7 @@ module Views exposing (..)
 import Html exposing (Html, text, div, button, h1, img, button, li, ul, a, h2)
 import Html.Attributes exposing (src, class, classList)
 import Html.Events exposing (onClick)
-import Models exposing (Model, Currency, Market, CurrencySymbol)
+import Models exposing (Model, Ticker, Market, CurrencySymbol)
 import Msgs exposing (Msg)
 import RemoteData exposing (..)
 
@@ -13,7 +13,7 @@ view model =
 
 currencyFetchView : Model -> Html Msg
 currencyFetchView model =
-  case model.currency of
+  case model.ticker of
       Loading ->
           div [] [ text "Loading..." ]
       NotAsked ->
@@ -27,14 +27,14 @@ currencyFetchView model =
             Nothing ->
               div [] []
 
-currencyView : Currency -> Market -> CurrencySymbol -> Html Msg
-currencyView currency selectedMarket currencySymbol =
+currencyView : Ticker -> Market -> CurrencySymbol -> Html Msg
+currencyView ticker selectedMarket currencySymbol =
   div []
-    [ div [] [ text <| currency.base ++ " - " ++ currency.target ]
-    , div [] [ text <| formattedCurrencyView currencySymbol currency.price ]
-    , div [] [ text <| currency.change ]
-    , div [] [ text <| currency.volume ]
-    , marketTabsView currency.markets selectedMarket
+    [ div [] [ text <| ticker.base ++ " - " ++ ticker.target ]
+    , div [] [ text <| formattedCurrencyView currencySymbol ticker.price ]
+    , div [] [ text <| ticker.change ]
+    , div [] [ text <| ticker.volume ]
+    , marketTabsView ticker.markets selectedMarket
     , marketView selectedMarket currencySymbol
     ]
 

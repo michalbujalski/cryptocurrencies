@@ -1,20 +1,20 @@
 module Updates exposing (..)
 import Msgs exposing (Msg)
-import Models exposing (Model, Market, Currency)
+import Models exposing (Model, Market, Ticker)
 import RemoteData exposing (..)
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
   case msg of
-      Msgs.UpdateCurrency currency ->
+      Msgs.UpdateCurrency ticker ->
         let
-            newSelected = updateSelectedMarket currency
+            newSelected = updateSelectedMarket ticker
         in
-          ( { model | currency = currency, selectedMarket = newSelected }, Cmd.none )
+          ( { model | ticker = ticker, selectedMarket = newSelected }, Cmd.none )
       Msgs.SelectMarket selectedMarket ->
         ( { model | selectedMarket = Just selectedMarket }, Cmd.none )
 
-updateSelectedMarket : WebData Currency -> Maybe Market
+updateSelectedMarket : WebData Ticker -> Maybe Market
 updateSelectedMarket data =
   case data of
       Loading -> 

@@ -15,11 +15,8 @@ fetchCurrency url =
     |> RemoteData.sendRequest
     |> Cmd.map Msgs.UpdateCurrency
 
-type alias Ticker = {
-  ticker: Currency
-}
 
-tickerDecoder : Decode.Decoder Currency
+tickerDecoder : Decode.Decoder Ticker
 tickerDecoder =
   Decode.at ["ticker"] currencyDecoder
 
@@ -34,9 +31,9 @@ marketsDecoder : Decode.Decoder (List Market)
 marketsDecoder =
   Decode.list marketDecoder
 
-currencyDecoder : Decode.Decoder Currency
+currencyDecoder : Decode.Decoder Ticker
 currencyDecoder =
-  decode Currency
+  decode Ticker
     |> required "base" Decode.string
     |> required "target" Decode.string
     |> required "price" Decode.string
