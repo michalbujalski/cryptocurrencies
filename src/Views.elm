@@ -3,7 +3,7 @@ module Views exposing (..)
 import Html exposing (Html, text, div, button, h1, img, button, li, ul, a, h2)
 import Html.Attributes exposing (src, class, classList)
 import Html.Events exposing (onClick)
-import Models exposing (Model, Currency, Market)
+import Models exposing (Model, Currency, Market, CurrencySymbol)
 import Msgs exposing (Msg)
 import RemoteData exposing (..)
 
@@ -23,19 +23,19 @@ currencyFetchView model =
       Success payload ->
         case model.selectedMarket of
             Just selectedMarket ->
-              currencyView payload selectedMarket
+              currencyView payload selectedMarket model.currencySymbol
             Nothing ->
               div [] []
 
-currencyView : Currency -> Market -> Html Msg
-currencyView currency selectedMarket =
+currencyView : Currency -> Market -> CurrencySymbol -> Html Msg
+currencyView currency selectedMarket currencySymbol =
   div []
     [ div [] [ text <| currency.base ++ " - " ++ currency.target ]
-    , div [] [ text <| "$ " ++ currency.price ]
+    , div [] [ text <| formattedCurrencyView currencySymbol currency.price ]
     , div [] [ text <| currency.change ]
     , div [] [ text <| currency.volume ]
     , marketTabsView currency.markets selectedMarket
-    , marketView selectedMarket
+    , marketView selectedMarket currencySymbol
     ]
 
 marketTabsView : List Market -> Market -> Html Msg
@@ -50,10 +50,14 @@ marketTabView market selectedMarket =
     [ a [ onClick <| Msgs.SelectMarket market ]
       [ text market.market ] ]
 
-marketView : Market -> Html Msg
-marketView market =
+marketView : Market -> CurrencySymbol -> Html Msg
+marketView market symbol =
   div []
     [ h2 [ class "market__name" ] [ text market.market ]
-    , h2 [ class "market__price" ] [ text market.price ]
+    , h2 [ class "market__price" ] [ text <| formattedCurrencyView symbol market.price ]
     , h2 [ class "market__volume" ] [ text <| toString market.volume ]
   ]
+
+formattedCurrencyView : CurrencySymbol -> String -> String
+formattedCurrencyView currency price =
+  currency ++ " " ++ price

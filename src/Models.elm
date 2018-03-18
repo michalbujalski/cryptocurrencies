@@ -19,13 +19,17 @@ type alias Currency = {
 
 type alias SelectedMarket = Maybe Market
 
-type alias Model = {
-  currency: WebData Currency,
-  selectedMarket: SelectedMarket
+type alias Model =
+  { currency: WebData Currency
+  , selectedMarket: SelectedMarket
+  , currencySymbol: CurrencySymbol
 }
+
+type alias CurrencySymbol = String
 
 defaultModel : Model
 defaultModel = 
   { currency = RemoteData.Loading
   , selectedMarket = Nothing
+  , currencySymbol = "$"
   }
