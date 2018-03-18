@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 This project is bootstrapped with [Create Elm App](https://github.com/halfzebra/create-elm-app).
 
 Below you will find some information on how to perform basic tasks.
@@ -863,3 +864,7 @@ GitHub Pages doesn’t support routers that use the HTML5 `pushState` history AP
 ## IDE setup for Hot Module Replacement
 
 Remember to disable [safe write](https://webpack.github.io/docs/webpack-dev-server.html#working-with-editors-ides-supporting-safe-write) if you are using VIM or IntelliJ IDE, such as WebStorm.
+=======
+# Cryptocurrencies exchange rate
+Simple cryptocurrencies exchange rates app made in elm using https://www.cryptonator.com/api/ api
+>>>>>>> 7590ae6cff339feb7eec839e7c4e19bebb55ba61
