@@ -25,7 +25,7 @@ currencyFetchView model =
       Success payload ->
         case model.selectedMarket of
             Just selectedMarket ->
-              currencyView payload selectedMarket model.currencySymbol model.cryptoCurrenciesSelect
+              currencyView payload selectedMarket model.cryptoCurrenciesSelect.currentCurrency.symbol model.cryptoCurrenciesSelect
             Nothing ->
               div [] []
 
@@ -35,7 +35,7 @@ currencyView ticker selectedMarket currencySymbol cryptoCurrenciesSelect =
     [ currenciesSelectView cryptoCurrenciesSelect
     , div [] [ text <| ticker.base ++ " - " ++ ticker.target ]
     , div [] [ text <| formattedCurrencyView currencySymbol ticker.price ]
-    , div [] [ text <| ticker.change ]
+    , div [] [ text <| formattedCurrencyView currencySymbol ticker.change ]
     , div [] [ text <| ticker.volume ]
     , marketTabsView ticker.markets selectedMarket
     , marketView selectedMarket currencySymbol
