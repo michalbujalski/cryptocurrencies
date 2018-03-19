@@ -25,14 +25,11 @@ currencyFetchView model =
         Failure failure ->
             div [] [ text <| toString failure ]
         Success payload ->
-          case model.selectedMarket of
-              Just selectedMarket ->
-                currencyView payload selectedMarket model.currenciesSelect.currentCurrency.symbol model.currenciesSelect
-              Nothing ->
-                div [] []
+            currencyView payload model.selectedMarket model.currenciesSelect.currentCurrency.symbol model.currenciesSelect
+
     ]
 
-currencyView : Ticker -> Market -> CurrencySymbol -> CurrenciesSelectModel -> Html Msg
+currencyView : Ticker -> Maybe Market -> CurrencySymbol -> CurrenciesSelectModel -> Html Msg
 currencyView ticker selectedMarket currencySymbol currenciesSelect =
   div []
     [ div [ class "ticker__container" ]
@@ -52,11 +49,15 @@ valueView label value =
     , span [ class "ticker-field__value" ] [ text value ]
     ]
 
-marketTabsView : List Market -> Market -> Html Msg
-marketTabsView markets selectedMarket =
-  div [ class "tabs market__tabs" ]
-    [ ul [] 
-      ( List.map2 marketTabView markets (List.repeat (List.length markets) selectedMarket)) ]
+marketTabsView : List Market -> Maybe Market -> Html Msg
+marketTabsView markets selectedMarketMaybe =
+  case selectedMarketMaybe of
+      Just selectedMarket ->
+        div [ class "tabs market__tabs" ]
+          [ ul [] 
+            ( List.map2 marketTabView markets (List.repeat (List.length markets) selectedMarket)) ]
+      Nothing ->
+        div [][]
 
 marketTabView : Market -> Market -> Html Msg
 marketTabView market selectedMarket =
@@ -64,12 +65,18 @@ marketTabView market selectedMarket =
     [ a [ onClick <| Msgs.SelectMarket market ]
       [ text market.market ] ]
 
-marketView : Market -> CurrencySymbol -> Html Msg
-marketView market symbol =
-  div [ class "market__container"]
-    [ valueView "Price : " <| formattedCurrencyView symbol market.price
-    , valueView "Woluem : " <| toString market.volume
-    ]
+marketView : Maybe Market -> CurrencySymbol -> Html Msg
+marketView maybeMarket symbol =
+  case maybeMarket of
+      Just market ->
+        div [ class "market__container"]
+          [ valueView "Price : " <| formattedCurrencyView symbol market.price
+          , valueView "Woluem : " <| toString market.volume
+          ]
+      Nothing ->
+        div [ class "market__empty" ]
+          [ text "No markets" ]
+
 
 formattedCurrencyView : CurrencySymbol -> String -> String
 formattedCurrencyView currency price =
