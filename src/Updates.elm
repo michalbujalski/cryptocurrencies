@@ -13,16 +13,28 @@ update msg model =
             ( updatedCurrenciesSelect, cmd) = updateCurrencies model.cryptoCurrenciesSelect msg
         in
             ( { model | cryptoCurrenciesSelect = updatedCurrenciesSelect }, Cmd.map Msgs.CurrencySelect cmd)
-      Msgs.FetchTicker currency ->
+      Msgs.FetchTickerWithUpdatedCurrency currency ->
         let
-            cryptoCurrenciesSelect = model.cryptoCurrenciesSelect 
+            currentCurrency = model.cryptoCurrenciesSelect
+            cryptoSymbol = currentCurrency.currentCryptoCurrency.symbol
+            newCurrenciesSelect = { currentCurrency 
+              | showCurrenciesSelectMenu = False
+              , currentCurrency = currency 
+              , showCurrenciesSelectMenu = False
+              }
+        in
+          ( { model | cryptoCurrenciesSelect = newCurrenciesSelect }, fetchCurrency <| currencyUrl cryptoSymbol currency.symbol )
+      Msgs.FetchTickerWithUpdatedCryptoCurrency currency ->
+        let
+            cryptoCurrenciesSelect = model.cryptoCurrenciesSelect
+            currencySymbol = cryptoCurrenciesSelect.currentCurrency.symbol
             newCurrenciesSelect = { cryptoCurrenciesSelect 
               | showCryptoCurrenciesSelectMenu = False
               , currentCryptoCurrency = currency 
               , showCurrenciesSelectMenu = False
               }
         in
-          ( { model | cryptoCurrenciesSelect = newCurrenciesSelect }, fetchCurrency <| currencyUrl currency.symbol )
+          ( { model | cryptoCurrenciesSelect = newCurrenciesSelect }, fetchCurrency <| currencyUrl currency.symbol currencySymbol)
       Msgs.UpdateCurrency ticker ->
         let
             newSelected = updateSelectedMarket ticker

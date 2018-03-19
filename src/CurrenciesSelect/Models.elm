@@ -30,7 +30,8 @@ currencies : Currencies
 currencies = 
   [ defaultCurrency
   , { name = "Euro", symbol = "EUR" }
-  , { name = "Polski złoty", symbol = "PLN" }
+  , { name = "British Pound", symbol = "GBP" }
+  , { name = "Yen", symbol = "JPY" }
   ]
 
 defaultCurrency : Currency

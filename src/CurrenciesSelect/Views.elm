@@ -11,18 +11,34 @@ import Msgs exposing (Msg)
 currenciesSelectView : CurrenciesSelectModel -> Html Msg
 currenciesSelectView model =
   div []
-    [ dropDownView model.currentCryptoCurrency (Msgs.CurrencySelect ToggleCryptoCurrenciesMenu) model.cryptoCurrencies model.showCryptoCurrenciesSelectMenu
-    , dropDownView model.currentCurrency (Msgs.CurrencySelect ToggleCurrenciesMenu) model.currencies model.showCurrenciesSelectMenu
+    [ dropDownView
+        model.currentCryptoCurrency
+        (Msgs.CurrencySelect ToggleCryptoCurrenciesMenu)
+        model.cryptoCurrencies
+        model.showCryptoCurrenciesSelectMenu
+        Msgs.FetchTickerWithUpdatedCryptoCurrency
+    , dropDownView
+        model.currentCurrency
+        (Msgs.CurrencySelect ToggleCurrenciesMenu)
+        model.currencies
+        model.showCurrenciesSelectMenu 
+        Msgs.FetchTickerWithUpdatedCurrency
     ]
 
-dropDownView : Currency -> Msg -> Currencies -> Bool -> Html Msg
-dropDownView selectedCurrency msg currencies isOpened =
+dropDownView : Currency -> Msg -> Currencies -> Bool -> (Currency -> Msg) -> Html Msg
+dropDownView selectedCurrency msg currencies isOpened itemMsg =
     div [ class "dropdown currency-select__container", classList [("is-active", isOpened)] ]
     [ div [ class "dropdown-trigger" ]
       [ dropdownButtonView 
         ( selectedCurrency.symbol ++ " - " ++ selectedCurrency.name ) msg
       , div [ class "dropdown-menu", role "menu", id "dropdown-menu" ]
-        [ div [ class "dropdown-content" ] ( List.map menuItemView currencies ) ]
+        [ div [ class "dropdown-content" ] 
+          ( List.map2
+            menuItemView 
+            currencies
+            ( List.repeat (List.length currencies) itemMsg )
+          )
+        ]
       ]
     ]
 
@@ -39,7 +55,7 @@ dropdownButtonView caption msg =
         [ i [ class "fas fa-angle-down", ariaHidden True ] [] ]
       ]
 
-menuItemView : Currency -> Html Msg
-menuItemView currency =
-  a [ class "dropdown-item currency-select__item", onClick <| Msgs.FetchTicker currency ]
+menuItemView : Currency -> (Currency -> Msg) -> Html Msg
+menuItemView currency msg =
+  a [ class "dropdown-item currency-select__item", onClick <| msg currency ]
     [ text <| currency.symbol ++ " - " ++ currency.name ]

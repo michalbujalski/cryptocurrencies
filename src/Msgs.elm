@@ -7,5 +7,6 @@ import CurrenciesSelect.Models exposing (Currency)
 type Msg
   = UpdateCurrency (WebData Ticker)
   | SelectMarket Market
-  | FetchTicker Currency
+  | FetchTickerWithUpdatedCryptoCurrency Currency
+  | FetchTickerWithUpdatedCurrency Currency
   | CurrencySelect CurrenciesSelectMsg
