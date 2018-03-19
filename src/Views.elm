@@ -15,25 +15,27 @@ view model =
 
 currencyFetchView : Model -> Html Msg
 currencyFetchView model =
-  case model.ticker of
-      Loading ->
-          div [] [ text "Loading..." ]
-      NotAsked ->
-          div [] []
-      Failure failure ->
-          div [] [ text <| toString failure ]
-      Success payload ->
-        case model.selectedMarket of
-            Just selectedMarket ->
-              currencyView payload selectedMarket model.currenciesSelect.currentCurrency.symbol model.currenciesSelect
-            Nothing ->
-              div [] []
+  div [] 
+    [ currenciesSelectView model.currenciesSelect
+    , case model.ticker of
+        Loading ->
+            div [] [ text "Loading..." ]
+        NotAsked ->
+            div [] []
+        Failure failure ->
+            div [] [ text <| toString failure ]
+        Success payload ->
+          case model.selectedMarket of
+              Just selectedMarket ->
+                currencyView payload selectedMarket model.currenciesSelect.currentCurrency.symbol model.currenciesSelect
+              Nothing ->
+                div [] []
+    ]
 
 currencyView : Ticker -> Market -> CurrencySymbol -> CurrenciesSelectModel -> Html Msg
 currencyView ticker selectedMarket currencySymbol currenciesSelect =
   div []
-    [ currenciesSelectView currenciesSelect
-    , div [] [ text <| ticker.base ++ " - " ++ ticker.target ]
+    [ div [] [ text <| ticker.base ++ " - " ++ ticker.target ]
     , div [] [ text <| formattedCurrencyView currencySymbol ticker.price ]
     , div [] [ text <| formattedCurrencyView currencySymbol ticker.change ]
     , div [] [ text <| ticker.volume ]
