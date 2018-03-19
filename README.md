@@ -1,7 +1,5 @@
 # Cryptocurrencies exchange rate
-Simple cryptocurrencies exchange rates app made in elm using https://www.cryptonator.com/api/ api
-
-The app was made using public api : https://api.cryptonator.com/api/
+Simple cryptocurrencies exchange rates app made in elm using public https://www.cryptonator.com/api/ api
 
 Below you will find some information on how to perform basic tasks.
 You can find the most recent version of this guide [here](https://github.com/halfzebra/create-elm-app/blob/master/template/README.md).
