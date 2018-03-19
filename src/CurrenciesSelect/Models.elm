@@ -1,8 +1,12 @@
 module CurrenciesSelect.Models exposing (..)
 
 type alias CurrenciesSelectModel =
-  { isOpened : Bool
+  { showCryptoCurrenciesSelectMenu : Bool
+  , showCurrenciesSelectMenu : Bool
   , cryptoCurrencies : Currencies
+  , currentCryptoCurrency: Currency
+  , currencies : Currencies
+  , currentCurrency : Currency
   }
 
 type alias Currencies = List Currency
@@ -22,12 +26,27 @@ cryptoCurrencies =
   , { name = "Bitcoin Gold", symbol = "BTG"}
   ]
 
+currencies : Currencies
+currencies = 
+  [ defaultCurrency
+  , { name = "Euro", symbol = "EUR" }
+  , { name = "Polski złoty", symbol = "PLN" }
+  ]
+
+defaultCurrency : Currency
+defaultCurrency = 
+  { name = "US Dollar", symbol = "USD" }
+
 defaultCryptoCurrency : Currency
 defaultCryptoCurrency = 
   { name = "Bitcoin", symbol = "BTC" }
 
 initCurrenciesSelectModel : CurrenciesSelectModel
 initCurrenciesSelectModel = 
-  { isOpened = False
+  { showCryptoCurrenciesSelectMenu = False
+  , showCurrenciesSelectMenu = False
   , cryptoCurrencies = cryptoCurrencies
+  , currentCryptoCurrency = defaultCryptoCurrency
+  , currencies = currencies
+  , currentCurrency = defaultCurrency
   }
