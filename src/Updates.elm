@@ -10,12 +10,12 @@ update msg model =
   case msg of
       Msgs.CurrencySelect msg ->
         let
-            ( updatedCurrenciesSelect, cmd) = updateCurrencies model.cryptoCurrenciesSelect msg
+            ( updatedCurrenciesSelect, cmd) = updateCurrencies model.currenciesSelect msg
         in
-            ( { model | cryptoCurrenciesSelect = updatedCurrenciesSelect }, Cmd.map Msgs.CurrencySelect cmd)
+            ( { model | currenciesSelect = updatedCurrenciesSelect }, Cmd.map Msgs.CurrencySelect cmd)
       Msgs.FetchTickerWithUpdatedCurrency currency ->
         let
-            currentCurrency = model.cryptoCurrenciesSelect
+            currentCurrency = model.currenciesSelect
             cryptoSymbol = currentCurrency.currentCryptoCurrency.symbol
             newCurrenciesSelect = { currentCurrency 
               | showCurrenciesSelectMenu = False
@@ -23,18 +23,18 @@ update msg model =
               , showCurrenciesSelectMenu = False
               }
         in
-          ( { model | cryptoCurrenciesSelect = newCurrenciesSelect }, fetchCurrency <| currencyUrl cryptoSymbol currency.symbol )
+          ( { model | currenciesSelect = newCurrenciesSelect }, fetchCurrency <| currencyUrl cryptoSymbol currency.symbol )
       Msgs.FetchTickerWithUpdatedCryptoCurrency currency ->
         let
-            cryptoCurrenciesSelect = model.cryptoCurrenciesSelect
-            currencySymbol = cryptoCurrenciesSelect.currentCurrency.symbol
-            newCurrenciesSelect = { cryptoCurrenciesSelect 
+            currenciesSelect = model.currenciesSelect
+            currencySymbol = currenciesSelect.currentCurrency.symbol
+            newCurrenciesSelect = { currenciesSelect 
               | showCryptoCurrenciesSelectMenu = False
               , currentCryptoCurrency = currency 
               , showCurrenciesSelectMenu = False
               }
         in
-          ( { model | cryptoCurrenciesSelect = newCurrenciesSelect }, fetchCurrency <| currencyUrl currency.symbol currencySymbol)
+          ( { model | currenciesSelect = newCurrenciesSelect }, fetchCurrency <| currencyUrl currency.symbol currencySymbol)
       Msgs.UpdateCurrency ticker ->
         let
             newSelected = updateSelectedMarket ticker
