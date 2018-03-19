@@ -1,3 +1,3 @@
 module CurrenciesSelect.Msgs exposing (..)
 
-type CurrenciesSelectMsg = ToggleCryptoCurrenciesMenu
+type CurrenciesSelectMsg = ToggleCryptoCurrenciesMenu | ToggleCurrenciesMenu
