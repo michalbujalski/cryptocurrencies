@@ -1,6 +1,6 @@
 module Views exposing (..)
 
-import Html exposing (Html, text, div, button, h1, img, button, li, ul, a, h2)
+import Html exposing (Html, text, div, button, h1, img, button, li, ul, a, h2, span)
 import Html.Attributes exposing (src, class, classList)
 import Html.Events exposing (onClick)
 import Models exposing (Model, Ticker, Market, CurrencySymbol)
@@ -35,12 +35,21 @@ currencyFetchView model =
 currencyView : Ticker -> Market -> CurrencySymbol -> CurrenciesSelectModel -> Html Msg
 currencyView ticker selectedMarket currencySymbol currenciesSelect =
   div []
-    [ div [] [ text <| ticker.base ++ " - " ++ ticker.target ]
-    , div [] [ text <| formattedCurrencyView currencySymbol ticker.price ]
-    , div [] [ text <| formattedCurrencyView currencySymbol ticker.change ]
-    , div [] [ text <| ticker.volume ]
+    [ div [ class "ticker__container" ]
+      [ valueView "Exchange rate : " <| ticker.base ++ " - " ++ ticker.target
+      , valueView "Price : " <| formattedCurrencyView currencySymbol ticker.price
+      , valueView "Change : " <| formattedCurrencyView currencySymbol ticker.change
+      , valueView "Volume : " <| ticker.volume
+      ]
     , marketTabsView ticker.markets selectedMarket
     , marketView selectedMarket currencySymbol
+    ]
+
+valueView : String -> String -> Html Msg
+valueView label value =
+  div []
+    [ span [ class "ticker-field__label" ] [ text label ]
+    , span [ class "ticker-field__value" ] [ text value ]
     ]
 
 marketTabsView : List Market -> Market -> Html Msg
@@ -57,11 +66,10 @@ marketTabView market selectedMarket =
 
 marketView : Market -> CurrencySymbol -> Html Msg
 marketView market symbol =
-  div []
-    [ h2 [ class "market__name" ] [ text market.market ]
-    , h2 [ class "market__price" ] [ text <| formattedCurrencyView symbol market.price ]
-    , h2 [ class "market__volume" ] [ text <| toString market.volume ]
-  ]
+  div [ class "market__container"]
+    [ valueView "Price : " <| formattedCurrencyView symbol market.price
+    , valueView "Woluem : " <| toString market.volume
+    ]
 
 formattedCurrencyView : CurrencySymbol -> String -> String
 formattedCurrencyView currency price =
