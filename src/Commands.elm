@@ -6,9 +6,9 @@ import Json.Decode.Pipeline exposing (decode, required)
 import RemoteData exposing (..)
 import Msgs exposing (..)
 
-currencyUrl : String -> String
-currencyUrl currencySymbol = 
-  "https://api.cryptonator.com/api/full/"++ currencySymbol ++"-usd"
+currencyUrl : String -> String -> String
+currencyUrl cryptoCurrencySymbol currencySymbol = 
+  "https://api.cryptonator.com/api/full/" ++ cryptoCurrencySymbol ++ "-" ++ currencySymbol
 
 fetchCurrency : String -> Cmd Msg
 fetchCurrency url =

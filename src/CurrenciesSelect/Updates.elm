@@ -7,6 +7,11 @@ updateCurrencies model msg =
   case msg of
       CurrenciesSelect.Msgs.ToggleCryptoCurrenciesMenu ->
         let
-            newIsOpened = not model.isOpened
+            newIsOpened = not model.showCryptoCurrenciesSelectMenu
         in
-          ( { model | isOpened = newIsOpened } , Cmd.none )
+          ( { model | showCryptoCurrenciesSelectMenu = newIsOpened } , Cmd.none )
+      CurrenciesSelect.Msgs.ToggleCurrenciesMenu ->
+        let
+          newIsOpened = not model.showCurrenciesSelectMenu
+        in
+          ( { model | showCurrenciesSelectMenu = newIsOpened } , Cmd.none )

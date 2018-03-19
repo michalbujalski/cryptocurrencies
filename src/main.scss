@@ -1,8 +1,10 @@
 @import '../node_modules/bulma/bulma.sass';
-
+$padding : 16px;
+$margin: 16px;
 body {
   font-family: 'Source Sans Pro', 'Trebuchet MS', 'Lucida Grande', 'Bitstream Vera Sans', 'Helvetica Neue', sans-serif;
   margin: 0;
+  padding: 16px;
   color: #293c4b;
 }
 
@@ -14,14 +16,37 @@ img {
   margin: 20px 0;
   max-width: 200px;
 }
+.ticker{
+  &-field{
+    &__label{
+      color: #999999;
+      width: 150px;
+      display: inline-block;
+    }
+    &__value{
+      color: #111111
+    }
+  }
+  &__container{
+    padding: $padding;
+  }
+}
 .currency{
   &-select{
     &__container{
-
+      margin-right: $margin;
+    }
+    &__button{
+      width: 180px;
     }
     &__item{
       text-align: left;
     }
+  }
+}
+.market{
+  &__container{
+    padding : $padding;
   }
 }
 .market__tabs{

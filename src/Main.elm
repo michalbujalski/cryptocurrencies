@@ -10,7 +10,7 @@ import Commands exposing (fetchCurrency, currencyUrl)
 
 init : ( Model, Cmd Msg )
 init =
-    ( defaultModel, fetchCurrency <| currencyUrl "btc" )
+    ( defaultModel, fetchCurrency <| currencyUrl "btc" "usd")
 
 main : Program Never Model Msg
 main =

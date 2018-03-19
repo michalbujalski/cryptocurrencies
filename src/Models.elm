@@ -25,7 +25,7 @@ type alias Model =
   , currencySymbol: CurrencySymbol
   , currentCryptoCurrency: Currency
   , cryptoCurrencies: Currencies
-  , cryptoCurrenciesSelect: CurrenciesSelectModel
+  , currenciesSelect: CurrenciesSelectModel
   }
 
 type alias CurrencySymbol = String
@@ -37,5 +37,5 @@ defaultModel =
   , currencySymbol = "$"
   , currentCryptoCurrency = defaultCryptoCurrency
   , cryptoCurrencies = cryptoCurrencies
-  , cryptoCurrenciesSelect = initCurrenciesSelectModel
+  , currenciesSelect = initCurrenciesSelectModel
   }
