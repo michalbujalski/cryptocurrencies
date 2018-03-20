@@ -3,7 +3,7 @@ module Views exposing (..)
 import Html exposing (Html, text, div, button, h1, img, button, li, ul, a, h2, span)
 import Html.Attributes exposing (src, class, classList)
 import Html.Events exposing (onClick)
-import Models exposing (Model, Ticker, Market, CurrencySymbol)
+import Models exposing (Model, Ticker, Market)
 import Msgs exposing (Msg)
 import RemoteData exposing (..)
 import CurrenciesSelect.Views exposing (..)
@@ -29,7 +29,7 @@ currencyFetchView model =
 
     ]
 
-currencyView : Ticker -> Maybe Market -> CurrencySymbol -> CurrenciesSelectModel -> Html Msg
+currencyView : Ticker -> Maybe Market -> String -> CurrenciesSelectModel -> Html Msg
 currencyView ticker selectedMarket currencySymbol currenciesSelect =
   div []
     [ div [ class "ticker__container" ]
@@ -65,7 +65,7 @@ marketTabView market selectedMarket =
     [ a [ onClick <| Msgs.SelectMarket market ]
       [ text market.market ] ]
 
-marketView : Maybe Market -> CurrencySymbol -> Html Msg
+marketView : Maybe Market -> String -> Html Msg
 marketView maybeMarket symbol =
   case maybeMarket of
       Just market ->
@@ -78,6 +78,6 @@ marketView maybeMarket symbol =
           [ text "No markets" ]
 
 
-formattedCurrencyView : CurrencySymbol -> String -> String
+formattedCurrencyView : String -> String -> String
 formattedCurrencyView currency price =
   currency ++ " " ++ price
