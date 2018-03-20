@@ -45,13 +45,11 @@ update msg model =
               parseLocation location
             tickerPath = case parseTickerPath location of
               Just tickerPath -> tickerPath
-              Nothing -> { currency = "USD", cryptoCurrency = "BTC" }
+              Nothing -> { currency = defaultCurrency.symbol, cryptoCurrency = defaultCryptoCurrency.symbol }
             newCurrenciesSelect = updateSelectedCurrenciesWithMaybe
               model.currenciesSelect
               (getCurrency tickerPath.cryptoCurrency model.currenciesSelect.cryptoCurrencies)
               (getCurrency tickerPath.currency model.currenciesSelect.currencies)
-            
-            _ = Debug.log "aa" newCurrenciesSelect.currentCryptoCurrency.symbol
         in
           ( { model
             | route = newRoute 

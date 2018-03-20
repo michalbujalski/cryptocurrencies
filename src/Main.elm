@@ -1,14 +1,13 @@
 module Main exposing (..)
 
-import Html exposing (program)
 import Models exposing (..)
 import Updates exposing (update)
 import Msgs exposing (Msg)
 import Views exposing (view)
-import Commands exposing (fetchCurrency, currencyUrl)
 import Routing exposing (..)
 import Navigation exposing (Location)
 import Routing exposing (..)
+import Updates exposing (..)
 
 init : Location -> ( Model, Cmd Msg )
 init location =
@@ -19,7 +18,7 @@ init location =
             Just tickerPath -> tickerPath
             Nothing -> { currency = "USD", cryptoCurrency = "BTC" }
   in
-    ( defaultModel currentRoute, fetchCurrency <| currencyUrl tickerPath.cryptoCurrency tickerPath.currency)
+    update (Msgs.OnLocationChange location) (defaultModel currentRoute)
 
 main : Program Never Model Msg
 main =
