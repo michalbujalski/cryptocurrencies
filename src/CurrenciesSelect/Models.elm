@@ -3,8 +3,8 @@ module CurrenciesSelect.Models exposing (..)
 type alias CurrenciesSelectModel =
   { showCryptoCurrenciesSelectMenu : Bool
   , showCurrenciesSelectMenu : Bool
-  , cryptoCurrencies : Currencies
-  , currentCryptoCurrency: Currency
+  , cryptoCurrencies : CryptoCurrencies
+  , currentCryptoCurrency: CryptoCurrency
   , currencies : Currencies
   , currentCurrency : Currency
   }
@@ -14,8 +14,10 @@ type alias Currency =
   { name : String
   , symbol : String
   }
+type alias CryptoCurrency = Currency
+type alias CryptoCurrencies = Currencies
 
-cryptoCurrencies : Currencies
+cryptoCurrencies : CryptoCurrencies
 cryptoCurrencies =
   [ defaultCryptoCurrency
   , { name = "Ether", symbol = "ETH" }
@@ -38,7 +40,7 @@ defaultCurrency : Currency
 defaultCurrency = 
   { name = "US Dollar", symbol = "USD" }
 
-defaultCryptoCurrency : Currency
+defaultCryptoCurrency : CryptoCurrency
 defaultCryptoCurrency = 
   { name = "Bitcoin", symbol = "BTC" }
 
