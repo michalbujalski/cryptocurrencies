@@ -4,6 +4,7 @@ import Models exposing (Model, Market, Ticker)
 import RemoteData exposing (..)
 import CurrenciesSelect.Updates exposing (..)
 import Commands exposing (fetchCurrency, currencyUrl)
+import Routing exposing (..)
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
@@ -50,6 +51,15 @@ update msg model =
           ( { model | ticker = ticker, selectedMarket = newSelected }, Cmd.none )
       Msgs.SelectMarket selectedMarket ->
         ( { model | selectedMarket = Just selectedMarket }, Cmd.none )
+      Msgs.OnLocationChange location ->
+        let
+            newRoute =
+              parseLocation location
+            tickerPath = case parseTickerPath location of
+              Just tickerPath -> tickerPath
+              Nothing -> { currency = "USD", cryptoCurrency = "BTC" }
+        in
+          ( { model | route = newRoute }, fetchCurrency <| currencyUrl tickerPath.cryptoCurrency tickerPath.currency)
 
 updateSelectedMarket : WebData Ticker -> Maybe Market
 updateSelectedMarket data =

@@ -1,7 +1,7 @@
 module Models exposing (..)
 import CurrenciesSelect.Models exposing (..)
 import RemoteData exposing (..)
-
+import Routing exposing (..)
 type alias Market =
   { market: String
   , price: String
@@ -26,16 +26,18 @@ type alias Model =
   , currentCryptoCurrency: Currency
   , cryptoCurrencies: Currencies
   , currenciesSelect: CurrenciesSelectModel
+  , route: Route
   }
 
 type alias CurrencySymbol = String
 
-defaultModel : Model
-defaultModel = 
+defaultModel : Route -> Model
+defaultModel route = 
   { ticker = RemoteData.Loading
   , selectedMarket = Nothing
   , currencySymbol = "$"
   , currentCryptoCurrency = defaultCryptoCurrency
   , cryptoCurrencies = cryptoCurrencies
   , currenciesSelect = initCurrenciesSelectModel
+  , route = route
   }
